@@ -45,4 +45,3 @@ Make sure your inventory (`hosts`) file and `ansible.cfg` are properly configure
 ---
 
 MIT License
-```
