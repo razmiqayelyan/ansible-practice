@@ -1,0 +1,37 @@
+---
+- name: Install Apache and Upload My Web Page
+  hosts: all_servers
+  become: yes
+
+  vars:
+    destin_folder: /var/www/html/
+
+  tasks:
+    - name: Install Apache Web Server
+      ansible.builtin.yum:
+        name: httpd
+        state: latest
+
+    - name: Copy web files individually
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ destin_folder }}"
+        mode: '0644'
+      loop:
+        - rm-portfolio/index.html
+        - rm-portfolio/style.css
+        - rm-portfolio/script.js
+        - rm-portfolio/rm.jpeg
+      notify: Restart Apache
+
+    - name: Start Apache and enable it on boot
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

@@ -1,0 +1,16 @@
+---
+- name: Install default Apache Web Server
+  hosts: all_servers
+  become: yes
+
+  tasks:
+    - name: Install Apache WebServer
+      ansible.builtin.yum:
+        name: httpd
+        state: latest
+
+    - name: Start Apache and enable it on every boot
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
