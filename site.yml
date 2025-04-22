@@ -1,0 +1,7 @@
+---
+- name: Configure Apache Web Servers
+  hosts: all_servers
+  become: yes
+
+  roles:
+    - webserver
